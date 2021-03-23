@@ -24,7 +24,7 @@ def buttons(update, context):
         LastTests(update, context)
         StartMenu(update, context)
     elif query.data.startswith('tests'):
-        pass  # TODO
+        StartMenu(update, context)
     elif query.data == 'history':
         HistoryTests(update, context)
         StartMenu(update, context)

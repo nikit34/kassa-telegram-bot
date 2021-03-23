@@ -1,5 +1,6 @@
+import os
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-from threading import Timer  # TODO
+import requests
 
 
 def StartMenu(update, context):
@@ -28,7 +29,15 @@ def HistoryTests(update, context):
 
 
 def RunTests(update, context):
-    pass
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text='tests are running'
+    )
+    requests.post('https://gitlab.rambler.ru/api/v4/projects/5750/trigger/pipeline', \
+                  files={
+                      'token': os.environ['CI_JOB_TOKEN'],
+                      'ref': 'ios-ui-tests'
+                  })
 
 
 def SettingsNotion(update, context):
