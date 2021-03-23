@@ -8,7 +8,7 @@ start_job:
     - local-telegram-bot
   before_script:
     - ps
-    - pkill -f handlers.py
+    - kill $(ps aux | grep '[p]ython handlers.py' | awk '{print $2}')
     - ps
   script:
     - python3 handlers.py
