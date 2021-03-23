@@ -24,7 +24,7 @@ def LastTests(update, context):
     context.bot.send_message(
         chat_id=update.effective_chat.id,
         text='Last run of tests \n\
-[link](https://kassa-mobile-dev.pages.rambler-co.ru/kassa-ui-tests/)'
+https://kassa-mobile-dev.pages.rambler-co.ru/kassa-ui-tests/'
     )
 
 
