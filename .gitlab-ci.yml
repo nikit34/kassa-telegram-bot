@@ -8,4 +8,5 @@ start_job:
     - local-telegram-bot
   script:
     - python3 handlers.py
+  allow_failure: false
 
