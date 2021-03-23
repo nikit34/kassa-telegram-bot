@@ -21,7 +21,11 @@ def StartMenu(update, context):
 
 
 def LastTests(update, context):
-    pass
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text='Last run of tests \n\
+[link](https://kassa-mobile-dev.pages.rambler-co.ru/kassa-ui-tests/)'
+    )
 
 
 def HistoryTests(update, context):
