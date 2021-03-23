@@ -7,10 +7,11 @@ start_job:
   tags:
     - local-telegram-bot
   before_script:
+
+  script:
     - ps
     - pkill -f handlers.py
     - ps
-  script:
     - python3 handlers.py
   allow_failure: false
 
