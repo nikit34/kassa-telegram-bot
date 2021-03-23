@@ -6,7 +6,7 @@ def StartMenu(update, context):
     keyboard = [
         [InlineKeyboardButton('last results tests', callback_data='last_results'),
         InlineKeyboardButton('history tests', callback_data='history')],
-            [InlineKeyboardButton('Run tests', callback_data='run'),
+        [InlineKeyboardButton('Run tests', callback_data='run'),
         InlineKeyboardButton('Setting of notifications', callback_data='notifications')]
     ]
     if context.chat_data['reply']:

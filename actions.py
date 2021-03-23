@@ -8,12 +8,13 @@ from screens import StartMenu, \
 
 def start(update, context):
     context.chat_data["user"] = update.message.chat.username
+    context.chat_data['reply'] = False
+    context.chat_data['screen'] = ''
     if context.args and context.args[0] == 'admin':
         AdminMenu(update, context)  # TODO
     else:
-        context.chat_data['reply'] = False
         StartMenu(update, context)
-        context.chat_data['reply'] = True
+    context.chat_data['reply'] = True
 
 
 def buttons(update, context):
