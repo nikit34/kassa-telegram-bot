@@ -6,6 +6,8 @@ start_job:
   stage: start
   tags:
     - local-telegram-bot
+  before_script:
+    - ps
   script:
     - python3 handlers.py
   allow_failure: false
