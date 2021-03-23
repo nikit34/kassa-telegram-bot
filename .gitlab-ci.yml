@@ -5,7 +5,7 @@ stages:
 start_job:
   stage: start
   tags:
-    - ios-host-1
+    - local-telegram-bot
   script:
     - python3 handlers.py
-  allow_failure: false
+
