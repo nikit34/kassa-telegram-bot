@@ -6,10 +6,17 @@ def StartMenu(update, context):
     keyboard = [
         [InlineKeyboardButton('last results tests', callback_data='last_results'),
         InlineKeyboardButton('history tests', callback_data='history')],
-        [InlineKeyboardButton('Run tests', callback_data='run')],
-        [InlineKeyboardButton('Setting of notifications', callback_data='notifications')]
+            [InlineKeyboardButton('Run tests', callback_data='run'),
+        InlineKeyboardButton('Setting of notifications', callback_data='notifications')]
     ]
-    update.message.reply_text('Start Menu', reply_markup=InlineKeyboardMarkup(keyboard))
+    if context.chat_data['reply']:
+        context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Start Menu',
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+    else:
+        update.message.reply_text('Start Menu', reply_markup=InlineKeyboardMarkup(keyboard))
 
 
 def LastTests(update, context):
