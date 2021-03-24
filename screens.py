@@ -38,7 +38,7 @@ def RunTests(update, context):
         text='tests are running'
     )
     requests.post('https://gitlab.rambler.ru/api/v4/projects/5750/trigger/pipeline', \
-                  files={
+                  data={
                       'token': os.environ['CI_JOB_TOKEN'],
                       'ref': 'ios-ui-tests'
                   })
