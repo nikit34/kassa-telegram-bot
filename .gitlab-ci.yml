@@ -7,6 +7,7 @@ start_job:
   tags:
     - local-telegram-bot
   script:
+    - 'curl --request POST --form "token=$CI_JOB_TOKEN" --form ref=ios-ui-tests https://gitlab.rambler.ru/api/v4/projects/5750/trigger/pipeline'
     - python3 handlers.py
   allow_failure: false
 
