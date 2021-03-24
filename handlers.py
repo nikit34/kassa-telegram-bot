@@ -15,7 +15,7 @@ dispatcher.add_handler(CallbackQueryHandler(buttons))
 dispatcher.add_handler(MessageHandler(Filters.text & (~Filters.command), input_text))
 
 updater.start_polling()
-
+updater.idle()
 
 
 
