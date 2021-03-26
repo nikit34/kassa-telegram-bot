@@ -69,9 +69,17 @@ class MainScreen(ErrorsHandler):
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
         if response.status_code == 200:
+            body_jobs = response.json()
+            text = ''
+            for body_job in body_jobs:
+                text += f'{body_job["name"]} - {body_job["status"].upper()}\n' + \
+                        f'duration:   {body_job["duration"]}s\n' + \
+                        f'author:     {body_job["commit"]["author_name"]}s\n' + \
+                        f'comment:    {body_job["commit"]["title"]}s\n' + \
+                        f'\nlaunched: {body_job["user"]["username"]}'
             self.context.bot.send_message(
                 chat_id=self.update.effective_chat.id,
-                text=str(response))
+                text=text)
 
     def _get_id_latest_pipeline(self):
         response = ''
