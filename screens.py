@@ -6,7 +6,7 @@ import requests
 def StartMenu(update, context):
     keyboard = [
         [InlineKeyboardButton('Last results tests', callback_data='last_results_tests'),
-        InlineKeyboardButton('History tests', callback_data='history_tests')],
+        InlineKeyboardButton('Status tests', callback_data='status_pipeline_tests')],
         [InlineKeyboardButton('Run tests', callback_data='run_tests')],
         [InlineKeyboardButton('Delete pipeline', callback_data='delete_pipeline_tests'),
         InlineKeyboardButton('Setting of notifications', callback_data='notifications')]
@@ -29,7 +29,7 @@ https://kassa-mobile-dev.pages.rambler-co.ru/kassa-ui-tests/'
     )
 
 
-def HistoryTests(update, context):
+def StatusPipeline(update, context):
     pass
 
 
@@ -53,15 +53,13 @@ status code: {response.status_code}'
 
 
 def DeletePipeline(update, context):
-    response = requests.get('https://gitlab.rambler.ru/api/v4/projects/5750/pipelines', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+    response = requests.delete('https://gitlab.rambler.ru/api/v4/projects/5750/pipelines/latest', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+    # response_dict = response.json()
+    # id_latest = response_dict['id']
     context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=f'{response}'
         )
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=f'{response.json()}'
-    )
     #
     # 'curl --header "PRIVATE-TOKEN: <your_access_token>" "https://gitlab.example.com/api/v4/projects/1/pipelines/46"'
     # response = requests.delete('https://gitlab.rambler.ru/api/v4/projects/5750/trigger/pipeline', \
