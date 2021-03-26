@@ -107,7 +107,7 @@ class MainScreen(ErrorsHandler):
         response = ''
         try:
             response = requests.get(f'https://gitlab.rambler.ru/api/v4/runners/all', \
-                                    headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+                                    headers={'token': os.environ['CI_JOB_TOKEN']})
             try:
                 body_runners = response.json()
                 for runner in body_runners:
