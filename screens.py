@@ -7,8 +7,8 @@ def StartMenu(update, context):
     keyboard = [
         [InlineKeyboardButton('Last results tests', callback_data='last_results_tests'),
         InlineKeyboardButton('History tests', callback_data='history_tests')],
-        [InlineKeyboardButton('Delete pipeline', callback_data='delete_pipeline_tests')],
-        [InlineKeyboardButton('Run tests', callback_data='run_tests'),
+        [InlineKeyboardButton('Run tests', callback_data='run_tests')],
+        [InlineKeyboardButton('Delete pipeline', callback_data='delete_pipeline_tests'),
         InlineKeyboardButton('Setting of notifications', callback_data='notifications')]
     ]
     if context.chat_data['reply']:
@@ -53,22 +53,27 @@ status code: {response.status_code}'
 
 
 def DeletePipeline(update, context):
-    response = requests.delete('https://gitlab.rambler.ru/api/v4/projects/5750/trigger/pipeline', \
-                  data={
-                      'token': os.environ['CI_JOB_TOKEN'],
-                      'ref': 'ios-ui-tests'
-                  })
-    if response.status_code == 200:
-        context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text='pipeline has deleted'
-        )
-    else:
-        context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=f'Error occurred on GitLab side \n\
-        status code: {response.status_code}'
-        )
+    response = requests.get('https://gitlab.example.com/api/v4/projects/5750/pipelines', headers={'PRIVATE-TOKEN': os.environ['CI_JOB_TOKEN']})
+    print(response)
+    print(response.json())
+    #
+    # 'curl --header "PRIVATE-TOKEN: <your_access_token>" "https://gitlab.example.com/api/v4/projects/1/pipelines/46"'
+    # response = requests.delete('https://gitlab.rambler.ru/api/v4/projects/5750/trigger/pipeline', \
+    #               data={
+    #                   'token': os.environ['CI_JOB_TOKEN'],
+    #                   'ref': 'ios-ui-tests'
+    #               })
+    # if response.status_code == 200:
+    #     context.bot.send_message(
+    #         chat_id=update.effective_chat.id,
+    #         text='pipeline has deleted'
+    #     )
+    # else:
+    #     context.bot.send_message(
+    #         chat_id=update.effective_chat.id,
+    #         text=f'Error occurred on GitLab side \n\
+    #     status code: {response.status_code}'
+    #     )
 
 
 def SettingsNotion(update, context):
