@@ -2,15 +2,26 @@ stages:
   - start
 
 
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/pip-cache"
+
+
 start_job:
   stage: start
   tags:
     - local-telegram-bot
   before_script:
     - pkill -9 -f handlers.py || true
+    - pip3 install -r requirements.txt
   script:
     - python3 handlers.py
   after_script:
     - pkill -9 -f handlers.py || true
+  cache:
+    untracked: true
+    key: $CI_JOB_STAGE
+    paths:
+      - "$CI_PROJECT_DIR/pip-cache"
+  retry: 2
   allow_failure: false
 
