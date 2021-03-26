@@ -72,12 +72,12 @@ class MainScreen(ErrorsHandler):
             return
         try:
             id_latest = response.json()['id']
-            self.errors_handler(f'vdfbfd - {id_latest}', str(id_latest))
         except KeyError as error:
             self.errors_handler('Key Error', error)
             return
         try:
             response = requests.delete(f'https://gitlab.rambler.ru/api/v4/projects/5750/pipelines/{id_latest}', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+            self.errors_handler(f'vdfbfd - {response.status_code}', str(response))
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
             return
