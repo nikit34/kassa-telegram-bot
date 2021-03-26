@@ -29,20 +29,18 @@ class MainScreen(ErrorsHandler):
         self.update = update
         self.context = context
 
+        self.id_server = '5750'
+
     def RunTests(self):
         response = ''
         try:
-            response = requests.post('https://gitlab.rambler.ru/api/v4/projects/5750/trigger/pipeline', \
+            response = requests.post(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/trigger/pipeline', \
                                      data={
                                          'token': os.environ['CI_JOB_TOKEN'],
                                          'ref': 'ios-ui-tests'
                                      })
         except requests.exceptions.RequestException as error:
-            print(f'[ERROR] RunTests -> POST request failed\nstatus code: {response.status_code}', error)
-            self.context.bot.send_message(
-                chat_id=self.update.effective_chat.id,
-                text=f'Error occurred on GitLab side\nstatus code: {response.status_code}')
-            return
+            self.errors_handler_network(response, error)
         if response.status_code == 200:
             self.context.bot.send_message(
                 chat_id=self.update.effective_chat.id,
@@ -50,19 +48,10 @@ class MainScreen(ErrorsHandler):
             )
 
     def CancelPipeline(self):
+        id_latest = self._get_id_latest_pipeline()
         response = ''
         try:
-            response = requests.get('https://gitlab.rambler.ru/api/v4/projects/5750/pipelines/latest', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
-        except requests.exceptions.RequestException as error:
-            self.errors_handler_network(response, error)
-            return
-        try:
-            id_latest = response.json()['id']
-        except KeyError as error:
-            self.errors_handler('Key Error', error)
-            return
-        try:
-            response = requests.post(f'https://gitlab.rambler.ru/api/v4/projects/5750/pipelines/{id_latest}/cancel', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+            response = requests.post(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/pipelines/{id_latest}/cancel', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
             return
@@ -74,7 +63,25 @@ class MainScreen(ErrorsHandler):
         )
 
     def StatusPipeline(self):
-        pass
+        id_latest = self._get_id_latest_pipeline()
+        response = ''
+        try:
+            response = requests.get(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/pipelines/{id_latest}/jobs?include_retried=true', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+        except requests.exceptions.RequestException as error:
+            self.errors_handler_network(response, error)
+            return
+
+    def _get_id_latest_pipeline(self):
+        response = ''
+        try:
+            response = requests.get(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/pipelines/latest', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+            try:
+                return response.json()['id']
+            except (AttributeError, KeyError) as error:
+                self.errors_handler(error)
+        except requests.exceptions.RequestException as error:
+            self.errors_handler_network(response, error)
+
 
 
     #
