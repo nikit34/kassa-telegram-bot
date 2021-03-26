@@ -7,7 +7,6 @@ start_job:
   tags:
     - local-telegram-bot
   script:
-    - pkill -f Python
     - python3 handlers.py
   allow_failure: false
 
