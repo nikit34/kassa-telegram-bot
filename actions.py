@@ -4,7 +4,7 @@ from screens import StartMenu, \
     RunTests, \
     SettingsNotion, \
     AdminMenu, \
-    DeletePipeline
+    MainScreen
 
 
 def start(update, context):
@@ -21,6 +21,7 @@ def start(update, context):
 def buttons(update, context):
     query = update.callback_query
     query.answer()
+    screen = MainScreen(update, context)
     if query.data == 'last_results_tests':
         LastTests(update, context)
         StartMenu(update, context)
@@ -28,7 +29,7 @@ def buttons(update, context):
         StatusPipeline(update, context)
         StartMenu(update, context)
     elif query.data == 'delete_pipeline_tests':
-        DeletePipeline(update, context)
+        screen.DeletePipeline()
         StartMenu(update, context)
     elif query.data == 'run_tests':
         RunTests(update, context)
