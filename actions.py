@@ -1,17 +1,10 @@
-from screens import StartMenu, \
-    SettingsNotion, \
-    AdminMenu, \
-    MainScreen
+from screens import StartMenu, MainScreen
 
 
 def start(update, context):
     context.chat_data['user'] = update.message.chat.username
     context.chat_data['reply'] = False
-    context.chat_data['screen'] = ''
-    if context.args and context.args[0] == 'admin':
-        AdminMenu(update, context)  # TODO
-    else:
-        StartMenu(update, context)
+    StartMenu(update, context)
 
 
 def buttons(update, context):
@@ -31,16 +24,6 @@ def buttons(update, context):
     elif query.data == 'status_pipeline_tests':
         screen.StatusPipeline()
         StartMenu(update, context)
-    elif query.data == 'notifications':
-        SettingsNotion(update, context)
+    elif query.data == 'enable_all_runners':
+        screen.EnabledRunners()
         StartMenu(update, context)
-    else:
-        pass
-
-
-def input_text(update, context):
-    if context.chat_data['screen'] == 'StatusPipeline':
-        StatusPipeline(update, context)
-        StartMenu(update, context)
-    else:
-        pass
