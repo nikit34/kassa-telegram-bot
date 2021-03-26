@@ -3,11 +3,12 @@ from screens import StartMenu, \
     HistoryTests, \
     RunTests, \
     SettingsNotion, \
-    AdminMenu
+    AdminMenu, \
+    DeletePipeline
 
 
 def start(update, context):
-    context.chat_data["user"] = update.message.chat.username
+    context.chat_data['user'] = update.message.chat.username
     context.chat_data['reply'] = False
     context.chat_data['screen'] = ''
     if context.args and context.args[0] == 'admin':
@@ -20,15 +21,16 @@ def start(update, context):
 def buttons(update, context):
     query = update.callback_query
     query.answer()
-    if query.data == 'last_results':
+    if query.data == 'last_results_tests':
         LastTests(update, context)
         StartMenu(update, context)
-    elif query.data.startswith('tests'):
-        StartMenu(update, context)
-    elif query.data == 'history':
+    elif query.data == 'history_tests':
         HistoryTests(update, context)
         StartMenu(update, context)
-    elif query.data == 'run':
+    elif query.data == 'delete_pipeline_tests':
+        DeletePipeline(update, context)
+        StartMenu(update, context)
+    elif query.data == 'run_tests':
         RunTests(update, context)
         StartMenu(update, context)
     elif query.data == 'notifications':
