@@ -90,6 +90,10 @@ class MainScreen(ErrorsHandler):
                                         headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']}, data={'runner_id': runner_id})
             except requests.exceptions.RequestException as error:
                 self.errors_handler_network(response, error)
+            if response.status_code == 200:
+                self.context.bot.send_message(
+                    chat_id=self.update.effective_chat.id,
+                    text=f'runner id: {runner_id} are ready')
 
     def _get_id_latest_pipeline(self):
         response = ''
@@ -108,10 +112,6 @@ class MainScreen(ErrorsHandler):
         try:
             response = requests.get(f'https://gitlab.rambler.ru/api/v4/runners', \
                                     headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
-            self.context.bot.send_message(
-                chat_id=self.update.effective_chat.id,
-                text=f'{response} {response.json()}')
-
             try:
                 body_runners = response.json()
                 for runner in body_runners:
