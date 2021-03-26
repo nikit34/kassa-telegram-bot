@@ -53,13 +53,15 @@ status code: {response.status_code}'
 
 
 def DeletePipeline(update, context):
-    print('gregreg')
-    print()
-    print(23432)
-    print()
-    # response = requests.get('https://gitlab.rambler.ru/api/v4/projects/5750/pipelines', headers={'PRIVATE-TOKEN': os.environ['CI_JOB_TOKEN']})
-    # print(response)
-    # print(response.json())
+    response = requests.get('https://gitlab.rambler.ru/api/v4/projects/5750/pipelines', headers={'PRIVATE-TOKEN': os.environ['CI_JOB_TOKEN']})
+    context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=f'{response}'
+        )
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=f'{response.json()}'
+    )
     #
     # 'curl --header "PRIVATE-TOKEN: <your_access_token>" "https://gitlab.example.com/api/v4/projects/1/pipelines/46"'
     # response = requests.delete('https://gitlab.rambler.ru/api/v4/projects/5750/trigger/pipeline', \
