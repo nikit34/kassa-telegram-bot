@@ -23,50 +23,36 @@ def StartMenu(update, context):
         update.message.reply_text('Start Menu', reply_markup=InlineKeyboardMarkup(keyboard))
 
 
-def LastTests(update, context):
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text='Last run of tests \n\
-https://kassa-mobile-dev.pages.rambler-co.ru/kassa-ui-tests/'
-    )
-
-
-def StatusPipeline(update, context):
-    pass
-
-
-def RunTests(update, context):
-    response = ''
-    try:
-        response = requests.post('https://gitlab.rambler.ru/api/v4/projects/5750/trigger/pipeline', \
-                      data={
-                          'token': os.environ['CI_JOB_TOKEN'],
-                          'ref': 'ios-ui-tests'
-                      })
-    except requests.exceptions.RequestException as error:
-        print(f'[ERROR] RunTests -> POST request failed\nstatus code: {response.status_code}', error)
-        context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=f'Error occurred on GitLab side\nstatus code: {response.status_code}')
-        return
-    if response.status_code == 200:
-        context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text='tests are running'
-        )
-
-
 class MainScreen(ErrorsHandler):
     def __init__(self, update, context):
         super().__init__(update, context)
         self.update = update
         self.context = context
 
-    def DeletePipeline(self):
+    def RunTests(self):
+        response = ''
+        try:
+            response = requests.post('https://gitlab.rambler.ru/api/v4/projects/5750/trigger/pipeline', \
+                                     data={
+                                         'token': os.environ['CI_JOB_TOKEN'],
+                                         'ref': 'ios-ui-tests'
+                                     })
+        except requests.exceptions.RequestException as error:
+            print(f'[ERROR] RunTests -> POST request failed\nstatus code: {response.status_code}', error)
+            self.context.bot.send_message(
+                chat_id=self.update.effective_chat.id,
+                text=f'Error occurred on GitLab side\nstatus code: {response.status_code}')
+            return
+        if response.status_code == 200:
+            self.context.bot.send_message(
+                chat_id=self.update.effective_chat.id,
+                text='tests are running'
+            )
+
+    def CancelPipeline(self):
         response = ''
         try:
             response = requests.get('https://gitlab.rambler.ru/api/v4/projects/5750/pipelines/latest', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
-            self.errors_handler(f'1 - {response.status_code}', str(response))
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
             return
@@ -77,10 +63,18 @@ class MainScreen(ErrorsHandler):
             return
         try:
             response = requests.post(f'https://gitlab.rambler.ru/api/v4/projects/5750/pipelines/{id_latest}/cancel', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
-            self.errors_handler(f'2 - {response}', str(response))
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
             return
+
+    def LastTests(self):
+        self.context.bot.send_message(
+            chat_id=self.update.effective_chat.id,
+            text='Last run of tests\nhttps://kassa-mobile-dev.pages.rambler-co.ru/kassa-ui-tests/'
+        )
+
+    def StatusPipeline(self):
+        pass
 
 
     #

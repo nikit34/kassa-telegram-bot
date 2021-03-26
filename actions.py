@@ -1,7 +1,4 @@
 from screens import StartMenu, \
-    LastTests, \
-    StatusPipeline, \
-    RunTests, \
     SettingsNotion, \
     AdminMenu, \
     MainScreen
@@ -23,16 +20,16 @@ def buttons(update, context):
     query.answer()
     screen = MainScreen(update, context)
     if query.data == 'last_results_tests':
-        LastTests(update, context)
-        StartMenu(update, context)
-    elif query.data == 'status_pipeline_tests':
-        StatusPipeline(update, context)
-        StartMenu(update, context)
-    elif query.data == 'delete_pipeline_tests':
-        screen.DeletePipeline()
+        screen.LastTests()
         StartMenu(update, context)
     elif query.data == 'run_tests':
-        RunTests(update, context)
+        screen.RunTests()
+        StartMenu(update, context)
+    elif query.data == 'delete_pipeline_tests':
+        screen.CancelPipeline()
+        StartMenu(update, context)
+    elif query.data == 'status_pipeline_tests':
+        screen.StatusPipeline()
         StartMenu(update, context)
     elif query.data == 'notifications':
         SettingsNotion(update, context)
