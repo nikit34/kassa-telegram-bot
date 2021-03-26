@@ -72,11 +72,12 @@ class MainScreen(ErrorsHandler):
             body_jobs = response.json()
             text = ''
             for body_job in body_jobs:
-                text += f'{body_job["name"]} - {body_job["status"].upper()}\n' + \
+                text += f'{body_job["status"].upper()} - {body_job["name"]}\n' + \
                         f'duration:   {body_job["duration"]}s\n' + \
-                        f'author:     {body_job["commit"]["author_name"]}s\n' + \
-                        f'comment:    {body_job["commit"]["title"]}s\n' + \
-                        f'\nlaunched: {body_job["user"]["username"]}'
+                        f'author:     {body_job["commit"]["author_name"]}\n' + \
+                        f'comment:    "{body_job["commit"]["title"]}"\n' + \
+                        f'launched: {body_job["user"]["username"]}\n' + \
+                         '---------------------------------------\n'
             self.context.bot.send_message(
                 chat_id=self.update.effective_chat.id,
                 text=text)
