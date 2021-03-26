@@ -107,7 +107,11 @@ class MainScreen(ErrorsHandler):
         response = ''
         try:
             response = requests.get(f'https://gitlab.rambler.ru/api/v4/runners/all', \
-                                    headers={'token': os.environ['CI_JOB_TOKEN']})
+                                    headers={'PRIVATE-TOKEN': os.environ['TOKEN']})
+            self.context.bot.send_message(
+                chat_id=self.update.effective_chat.id,
+                text=f'{response} {response.json()}')
+
             try:
                 body_runners = response.json()
                 for runner in body_runners:
