@@ -62,7 +62,6 @@ class MainScreen(ErrorsHandler):
         self.update = update
         self.context = context
 
-
     def DeletePipeline(self):
         response = ''
         try:
@@ -77,7 +76,7 @@ class MainScreen(ErrorsHandler):
             self.errors_handler('Key Error', error)
             return
         try:
-            response = requests.delete(f'https://gitlab.rambler.ru/api/v4/projects/5750/pipelines/{id_latest}', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+            response = requests.post(f'https://gitlab.rambler.ru/api/v4/projects/5750/pipelines/{id_latest}/cancel', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
             self.errors_handler(f'2 - {response}', str(response))
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
