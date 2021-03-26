@@ -10,5 +10,7 @@ start_job:
     - pkill -9 -f handlers.py || true
   script:
     - python3 handlers.py
+  after_script:
+    - pkill -9 -f handlers.py || true
   allow_failure: false
 
