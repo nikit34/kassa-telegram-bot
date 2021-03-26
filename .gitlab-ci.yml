@@ -22,6 +22,5 @@ start_job:
     key: $CI_JOB_STAGE
     paths:
       - "$CI_PROJECT_DIR/pip-cache"
-  retry: 2
   allow_failure: false
 
