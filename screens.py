@@ -37,13 +37,10 @@ class MainScreen(ErrorsHandler):
                                      data={'token': os.environ['CI_JOB_TOKEN'], 'ref': 'ios-ui-tests'})
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
-        if response.status_code == 200:
+        if response.status_code == 201:
             self.context.bot.send_message(
                 chat_id=self.update.effective_chat.id,
                 text='tests are running')
-        self.context.bot.send_message(
-            chat_id=self.update.effective_chat.id,
-            text=f'{response.status_code}')
 
     def CancelPipeline(self):
         id_latest = self._get_id_latest_pipeline()
