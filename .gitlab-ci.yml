@@ -6,8 +6,6 @@ start_job:
   stage: start
   tags:
     - local-telegram-bot
-  before_script:
-    - pkill -f Python
   script:
     - pkill -f Python
     - python3 handlers.py
