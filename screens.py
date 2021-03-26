@@ -72,6 +72,7 @@ class MainScreen(ErrorsHandler):
             return
         try:
             id_latest = response.json()['id']
+            self.errors_handler(f'vdfbfd - {id_latest}', str(id_latest))
         except KeyError as error:
             self.errors_handler('Key Error', error)
             return
