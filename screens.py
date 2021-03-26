@@ -8,8 +8,8 @@ from errors import ErrorsHandler
 def StartMenu(update, context):
     keyboard = [
         [InlineKeyboardButton('Last results tests', callback_data='last_results_tests'),
-        InlineKeyboardButton('Status tests', callback_data='status_pipeline_tests')],
-        [InlineKeyboardButton('Run tests', callback_data='run_tests')],
+        InlineKeyboardButton('Status pipeline', callback_data='status_pipeline_tests')],
+        [InlineKeyboardButton('Run pipeline of tests', callback_data='run_tests')],
         [InlineKeyboardButton('Delete pipeline', callback_data='delete_pipeline_tests'),
         InlineKeyboardButton('Setting of notifications', callback_data='notifications')]
     ]
