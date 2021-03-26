@@ -6,18 +6,19 @@ from screens import StartMenu, \
 
 def start(update, context):
     context.chat_data['user'] = update.message.chat.username
-    context.chat_data['reply'] = False
+    # context.chat_data['reply'] = False
     context.chat_data['screen'] = ''
     if context.args and context.args[0] == 'admin':
         AdminMenu(update, context)  # TODO
-    else:
-        StartMenu(update, context)
-    context.chat_data['reply'] = True
+    # else:
+    #     StartMenu(update, context)
+    # context.chat_data['reply'] = True
 
 
 def buttons(update, context):
     query = update.callback_query
     query.answer()
+    context.chat_data['reply'] = True
     screen = MainScreen(update, context)
     if query.data == 'last_results_tests':
         screen.LastTests()
