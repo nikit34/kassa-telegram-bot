@@ -53,7 +53,9 @@ status code: {response.status_code}'
 
 
 def DeletePipeline(update, context):
+    print(111)
     response = requests.get('https://gitlab.rambler.ru/api/v4/projects/5750/pipelines', headers={'PRIVATE-TOKEN': os.environ['CI_JOB_TOKEN']})
+    print(222)
     print(response)
     print(response.json())
     #
