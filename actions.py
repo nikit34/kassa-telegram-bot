@@ -14,16 +14,12 @@ def buttons(update, context):
     screen = MainScreen(update, context)
     if query.data == 'last_results_tests':
         screen.LastTests()
-        StartMenu(update, context)
     elif query.data == 'run_tests':
         screen.RunTests()
-        StartMenu(update, context)
     elif query.data == 'delete_pipeline_tests':
         screen.CancelPipeline()
-        StartMenu(update, context)
     elif query.data == 'status_pipeline_tests':
         screen.StatusPipeline()
-        StartMenu(update, context)
     elif query.data == 'enable_all_runners':
         screen.EnabledRunners()
-        StartMenu(update, context)
+    StartMenu(update, context)
