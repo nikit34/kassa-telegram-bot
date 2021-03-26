@@ -53,7 +53,7 @@ status code: {response.status_code}'
 
 
 def DeletePipeline(update, context):
-    response = requests.delete('https://gitlab.rambler.ru/api/v4/projects/5750/pipelines', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+    response = requests.get('https://gitlab.rambler.ru/api/v4/projects/5750/pipelines', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
     # response_dict = response.json()
     # id_latest = response_dict['id']
     context.bot.send_message(
