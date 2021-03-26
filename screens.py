@@ -78,7 +78,7 @@ class MainScreen(ErrorsHandler):
             return
         try:
             response = requests.delete(f'https://gitlab.rambler.ru/api/v4/projects/5750/pipelines/{id_latest}', headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
-            self.errors_handler(f'2 - {response.status_code}', str(response))
+            self.errors_handler(f'2 - {response}', str(response))
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
             return
