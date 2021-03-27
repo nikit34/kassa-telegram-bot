@@ -90,6 +90,9 @@ class MainScreen(ErrorsHandler):
                                         headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']}, data={'runner_id': runner_id})
             except requests.exceptions.RequestException as error:
                 self.errors_handler_network(response, error)
+            self.context.bot.send_message(
+                chat_id=self.update.effective_chat.id,
+                text=response)
             if response.status_code == 200:
                 body_runner = response.json()
                 text = ''
