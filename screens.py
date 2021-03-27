@@ -73,7 +73,7 @@ class MainScreen(ErrorsHandler):
             text = ''
             for body_job in body_jobs:
                 text += f'{body_job["status"].upper()} - {body_job["name"]}\n' + \
-                        f'duration: {body_job["duration"]}s\n' + \
+                        f'duration: {body_job["duration"] + "s" if body_job["duration"] is not None else "not started"}\n' + \
                         f'author:   {body_job["commit"]["author_name"]}\n' + \
                         f'comment:  "{body_job["commit"]["title"]}"\n' + \
                         f'launched: {body_job["user"]["username"]}\n' + \
