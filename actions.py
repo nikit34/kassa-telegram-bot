@@ -20,6 +20,6 @@ def buttons(update, context):
         screen.CancelPipeline()
     elif query.data == 'status_pipeline_tests':
         screen.StatusPipeline()
-    elif query.data == 'enable_all_runners':
-        screen.EnabledRunners()
+    elif query.data == 'status_runners':
+        screen.StatusRunners()
     StartMenu(update, context)

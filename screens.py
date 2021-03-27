@@ -11,7 +11,7 @@ def StartMenu(update, context):
         InlineKeyboardButton('Status pipeline', callback_data='status_pipeline_tests')],
         [InlineKeyboardButton('Run pipeline of tests', callback_data='run_tests')],
         [InlineKeyboardButton('Cancel pipeline', callback_data='delete_pipeline_tests'),
-        InlineKeyboardButton('Enable all runners', callback_data='enable_all_runners')]
+        InlineKeyboardButton('Status runners', callback_data='status_runners')]
     ]
     if context.chat_data['reply']:
         context.bot.send_message(
@@ -82,12 +82,12 @@ class MainScreen(ErrorsHandler):
                 chat_id=self.update.effective_chat.id,
                 text=text)
 
-    def EnabledRunners(self):
+    def StatusRunners(self):
         response = ''
         for runner_id in self._get_id_all_runners():
             try:
-                response = requests.post(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/runners', \
-                                        headers={'PRIVATE-TOKEN': '35TrJK3WsRchJdPyH7Ux'}, data={'runner_id': runner_id})
+                response = requests.get(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/runners/{runner_id}', \
+                                        headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']}, data={'runner_id': runner_id})
                 self.context.bot.send_message(
                     chat_id=self.update.effective_chat.id,
                     text=f'1/ {response}')
