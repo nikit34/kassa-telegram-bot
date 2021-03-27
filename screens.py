@@ -88,19 +88,19 @@ class MainScreen(ErrorsHandler):
             try:
                 response = requests.get(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/runners/{runner_id}', \
                                         headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']}, data={'runner_id': runner_id})
-                self.context.bot.send_message(
-                    chat_id=self.update.effective_chat.id,
-                    text=f'1/ {response}')
             except requests.exceptions.RequestException as error:
                 self.errors_handler_network(response, error)
-
-                self.context.bot.send_message(
-                    chat_id=self.update.effective_chat.id,
-                    text=f'2/ {error}, {response}')
             if response.status_code == 200:
+                body_runner = response.json()
+                text = ''
+                text += f'{body_runner["status"].upper()} - {body_runner["name"]}\n' + \
+                        f'description: "{body_runner["description"]}"\n' + \
+                        f'IP address:  {body_runner["ip_address"]}\n' + \
+                        f'tag list:    {" ".join([str(tag) for tag in body_runner["tag_list"]])}\n' + \
+                        '---------------------------------------\n'
                 self.context.bot.send_message(
                     chat_id=self.update.effective_chat.id,
-                    text=f'runner id: {runner_id} are ready')
+                    text=text)
 
     def _get_id_latest_pipeline(self):
         response = ''
