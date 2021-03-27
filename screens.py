@@ -1,5 +1,5 @@
 import os
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ParseMode
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 import requests
 
 from errors import ErrorsHandler
