@@ -87,16 +87,16 @@ class MainScreen(ErrorsHandler):
         for runner_id in self._get_id_all_runners():
             try:
                 response = requests.post(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/runners', \
-                                        headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']}, form={'runner_id': runner_id})
+                                        headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']}, data={'runner_id': runner_id})
                 self.context.bot.send_message(
                     chat_id=self.update.effective_chat.id,
-                    text=f'{response}')
+                    text=f'1/ {response}')
             except requests.exceptions.RequestException as error:
                 self.errors_handler_network(response, error)
 
                 self.context.bot.send_message(
                     chat_id=self.update.effective_chat.id,
-                    text=f'runner id: {response} are ready')
+                    text=f'2/ {error}, {response}')
             if response.status_code == 200:
                 self.context.bot.send_message(
                     chat_id=self.update.effective_chat.id,
