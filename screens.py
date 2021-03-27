@@ -40,7 +40,7 @@ class MainScreen(ErrorsHandler):
         if response.status_code == 201:
             self.context.bot.send_message(
                 chat_id=self.update.effective_chat.id,
-                text='tests are running')
+                text='**Tests are running**')
 
     def CancelPipeline(self):
         id_latest = self._get_id_latest_pipeline()
@@ -53,12 +53,12 @@ class MainScreen(ErrorsHandler):
         if response.status_code == 200:
             self.context.bot.send_message(
                 chat_id=self.update.effective_chat.id,
-                text='pipeline has cancel')
+                text='**Pipeline has cancel**')
 
     def LastTests(self):
         self.context.bot.send_message(
             chat_id=self.update.effective_chat.id,
-            text='Last run of tests\nhttps://kassa-mobile-dev.pages.rambler-co.ru/kassa-ui-tests/')
+            text='**Last results:**\nhttps://kassa-mobile-dev.pages.rambler-co.ru/kassa-ui-tests/')
 
     def StatusPipeline(self):
         id_latest = self._get_id_latest_pipeline()
