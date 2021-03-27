@@ -41,7 +41,7 @@ class MainScreen(ErrorsHandler):
             self.context.bot.send_message(
                 chat_id=self.update.effective_chat.id,
                 text='**Tests are running**',
-                parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN_V2)
 
     def CancelPipeline(self):
         id_latest = self._get_id_latest_pipeline()
