@@ -92,7 +92,7 @@ class MainScreen(ErrorsHandler):
                 self.errors_handler_network(response, error)
             self.context.bot.send_message(
                 chat_id=self.update.effective_chat.id,
-                text=response)
+                text=response.status_code)
             if response.status_code == 200:
                 body_runner = response.json()
                 text = ''
