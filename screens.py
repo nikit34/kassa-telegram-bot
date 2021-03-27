@@ -72,11 +72,11 @@ class MainScreen(ErrorsHandler):
             body_jobs = response.json()
             text = ''
             for body_job in body_jobs:
-                text += f'          {body_job["name"]}' + \
-                        f'status:   {body_job["status"]} {"✅" if body_job["status"] == "success" else "⏭️" if body_job["status"] == "pending" else "❌"}\n' + \
-                        f'duration: {body_job["duration"]} {"s" if body_job["duration"] is not None else "not started"}\n' + \
-                        f'author:   {body_job["commit"]["author_name"]}\n' + \
-                        f'comment:  "{body_job["commit"]["title"]}"\n' + \
+                text += f'{body_job["name"]}\n' + \
+                        f'status: {body_job["status"]} {"✅" if body_job["status"] == "success" else "⏭️" if body_job["status"] == "pending" else "❌"}\n' + \
+                        f'duration: {str(round(body_job["duration"], 2))}{"s" if body_job["duration"] is not None else "not started"}\n' + \
+                        f'author: {body_job["commit"]["author_name"]}\n' + \
+                        f'comment: "{body_job["commit"]["title"]}"\n' + \
                         f'launched: {body_job["user"]["username"]}\n' + \
                          '---------------------------------------\n'
             self.context.bot.send_message(
