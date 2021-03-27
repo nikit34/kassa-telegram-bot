@@ -87,7 +87,7 @@ class MainScreen(ErrorsHandler):
         for runner_id in self._get_id_all_runners():
             try:
                 response = requests.post(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/runners', \
-                                        headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']}, data={'runner_id': runner_id})
+                                        headers={'PRIVATE-TOKEN': '35TrJK3WsRchJdPyH7Ux'}, data={'runner_id': runner_id})
                 self.context.bot.send_message(
                     chat_id=self.update.effective_chat.id,
                     text=f'1/ {response}')
