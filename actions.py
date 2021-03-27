@@ -23,7 +23,3 @@ def buttons(update, context):
     elif query.data == 'status_runners':
         screen.StatusRunners()
     StartMenu(update, context)
-
-
-def input_text(update, context):
-    pass
