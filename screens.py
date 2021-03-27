@@ -86,7 +86,7 @@ class MainScreen(ErrorsHandler):
         response = ''
         for runner_id in self._get_id_all_runners():
             try:
-                response = requests.get(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/runners/{runner_id}', \
+                response = requests.get(f'https://gitlab.rambler.ru/api/v4/runners/{runner_id}', \
                                         headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
             except requests.exceptions.RequestException as error:
                 self.errors_handler_network(response, error)
