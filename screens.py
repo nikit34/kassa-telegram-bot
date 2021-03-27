@@ -40,7 +40,8 @@ class MainScreen(ErrorsHandler):
         if response.status_code == 201:
             self.context.bot.send_message(
                 chat_id=self.update.effective_chat.id,
-                text='**Tests are running**')
+                text='**Tests are running**',
+                parse_mode="Markdown")
 
     def CancelPipeline(self):
         id_latest = self._get_id_latest_pipeline()
