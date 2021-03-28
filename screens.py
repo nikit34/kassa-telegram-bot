@@ -47,7 +47,7 @@ class MainScreen(ErrorsHandler):
         response = ''
         try:
             response = requests.post(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/pipelines/{id_latest}/cancel', \
-                                     headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+                                     headers={'PRIVATE-TOKEN': os.environ['CLIENT_TOKEN']})
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
         if response.status_code == 200:
@@ -65,7 +65,7 @@ class MainScreen(ErrorsHandler):
         response = ''
         try:
             response = requests.get(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/pipelines/{id_latest}/jobs?include_retried=true', \
-                                    headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+                                    headers={'PRIVATE-TOKEN': os.environ['CLIENT_TOKEN']})
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
         if response.status_code == 200:
@@ -89,7 +89,7 @@ class MainScreen(ErrorsHandler):
         for runner_id in self._get_id_all_runners():
             try:
                 response = requests.get(f'https://gitlab.rambler.ru/api/v4/runners/{runner_id}', \
-                                        headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+                                        headers={'PRIVATE-TOKEN': os.environ['CLIENT_TOKEN']})
             except requests.exceptions.RequestException as error:
                 self.errors_handler_network(response, error)
             if response.status_code == 200:
@@ -107,7 +107,7 @@ class MainScreen(ErrorsHandler):
         response = ''
         try:
             response = requests.get(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/pipelines/latest', \
-                                    headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+                                    headers={'PRIVATE-TOKEN': os.environ['CLIENT_TOKEN']})
             try:
                 return response.json()['id']
             except (AttributeError, KeyError) as error:
@@ -119,7 +119,7 @@ class MainScreen(ErrorsHandler):
         response = ''
         try:
             response = requests.get(f'https://gitlab.rambler.ru/api/v4/runners', \
-                                    headers={'PRIVATE-TOKEN': os.environ['PRIVATE_TOKEN']})
+                                    headers={'PRIVATE-TOKEN': os.environ['CLIENT_TOKEN']})
             try:
                 body_runners = response.json()
                 for runner in body_runners:
