@@ -34,7 +34,8 @@ class MainScreen(ErrorsHandler):
         response = ''
         try:
             response = requests.post(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/trigger/pipeline', \
-                                     data={'token': os.environ['CI_JOB_TOKEN'], 'ref': 'ios-ui-tests'})
+                                     data={'token': os.environ['CI_JOB_TOKEN'], 'ref': 'ios-ui-tests'}, \
+                                     headers={'PRIVATE-TOKEN': os.environ['CLIENT_TOKEN']})
         except requests.exceptions.RequestException as error:
             self.errors_handler_network(response, error)
         if response.status_code == 201:
