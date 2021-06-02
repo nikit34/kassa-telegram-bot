@@ -108,7 +108,7 @@ class MainScreen(ErrorsHandler):
         response = ''
         try:
             response = requests.get(f'https://gitlab.rambler.ru/api/v4/projects/{self.id_server}/pipelines/latest', \
-                                    headers={'PRIVATE-TOKEN': os.environ['CLIENT_TOKEN']})
+                                    headers={'PRIVATE-TOKEN': os.environ['SERVER_TOKEN']})
             try:
                 return response.json()['id']
             except (AttributeError, KeyError) as error:
