@@ -9,7 +9,7 @@ variables:
 start_job:
   stage: start
   tags:
-    - ios-host-2
+    - android-host-telegrambot
   before_script:
     - pkill -9 -f handlers.py || true
     - pip3 install -r requirements.txt
