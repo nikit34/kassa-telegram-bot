@@ -10,6 +10,7 @@ start_job:
   stage: start
   tags:
     - android-host-telegrambot
+    - ios-host-telegrambot
   before_script:
     - pkill -9 -f handlers.py || true
     - pip3 install -r requirements.txt
